@@ -1,9 +1,9 @@
-package hw7.Family;
+package hw8.Family;
 
-import hw7.Family.People.Family;
-import hw7.Family.People.Human;
-import hw7.Family.People.Man;
-import hw7.Family.People.Woman;
+import hw8.Family.People.Family;
+import hw8.Family.People.Human;
+import hw8.Family.People.Man;
+import hw8.Family.People.Woman;
 
 import java.util.ArrayList;
 import java.util.List;

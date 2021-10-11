@@ -1,4 +1,4 @@
-package hw7.Family;
+package hw8.Family;
 
 public enum DayOfWeek {
     SUNDAY,

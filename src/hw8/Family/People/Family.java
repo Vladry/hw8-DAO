@@ -1,11 +1,11 @@
-package hw7.Family.People;
+package hw8.Family.People;
 
-import hw7.Family.Animals.Pet;
+import hw8.Family.Animals.Pet;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static hw7.Family.People.BabyFactory.deliverABaby;
+import static hw8.Family.People.BabyFactory.deliverABaby;
 
 public class Family implements HumanCreator {
 

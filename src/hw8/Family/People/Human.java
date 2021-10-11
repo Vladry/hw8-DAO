@@ -1,7 +1,7 @@
-package hw7.Family.People;
+package hw8.Family.People;
 
-import hw7.Family.Animals.Pet;
-import hw7.Family.DayOfWeek;
+import hw8.Family.Animals.Pet;
+import hw8.Family.DayOfWeek;
 
 import java.util.*;
 

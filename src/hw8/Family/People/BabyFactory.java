@@ -1,4 +1,4 @@
-package hw7.Family.People;
+package hw8.Family.People;
 
 import java.util.Random;
 

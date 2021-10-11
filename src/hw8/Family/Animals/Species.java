@@ -1,4 +1,4 @@
-package hw7.Family.Animals;
+package hw8.Family.Animals;
 
 public enum Species {
     DOG, LIZARD, SQUIRREL, FISH, DOMESTICCAT, ROBOCAT, UNKNOWN
