@@ -11,12 +11,10 @@ public class CollectionFamilyDao<T> implements FamilyDAO<T> {
         memoryStore = new LinkedList<T>();
     }
 
-    @Override
     public List<T> getAllFamilies() {
         return memoryStore;
     }
 
-    @Override
     public T getFamilyByIndex(int i) {
         try {
             return memoryStore.get(i);
@@ -25,7 +23,6 @@ public class CollectionFamilyDao<T> implements FamilyDAO<T> {
         }
     }
 
-    @Override
     public boolean deleteFamily(int i) {
         try {
             memoryStore.remove(i);
@@ -35,7 +32,6 @@ public class CollectionFamilyDao<T> implements FamilyDAO<T> {
         }
     }
 
-    @Override
     public boolean deleteFamily(T o) {
         try {
             memoryStore.remove(o);
@@ -45,7 +41,6 @@ public class CollectionFamilyDao<T> implements FamilyDAO<T> {
         }
     }
 
-    @Override
     public boolean saveFamily(T o) {
         if (memoryStore.contains(o)) {
             memoryStore.set(memoryStore.indexOf(o), o);

@@ -1,4 +1,5 @@
 package hw8.Family.People;
 
-public class FamilyController implements Services<T> {
+public class FamilyController extends FamilyService {
+
 }
