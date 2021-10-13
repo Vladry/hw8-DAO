@@ -1,9 +1,6 @@
 package hw8.Family;
 
-import hw8.Family.People.Family;
-import hw8.Family.People.Human;
-import hw8.Family.People.Man;
-import hw8.Family.People.Woman;
+import hw8.Family.People.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +11,7 @@ public class Main {
         Human dad = new Man("Sergey", "Ivankov", 1980);
         Human mom = new Woman("Zoya", "Ivankova", 1985);
         Family family = new Family(dad, mom);
+
         dad.setFamily(family);
         mom.setFamily(family);
         int totalChildren = 3;
@@ -29,6 +27,9 @@ public class Main {
         System.out.println("всего создано детей: " + totalChildren);
         System.out.println("из них девочек: " + girlsCounter);
         System.out.println("number of family members: " + family.countFamily(children.size()));
+
+        CollectionFamilyDao<Family> familyMemStorage = new CollectionFamilyDao<>();//создаём хранилище1
+        familyMemStorage.saveFamily(family); // сохранили семью в файл
     }
 }
 

@@ -75,6 +75,10 @@ addPet - принимает индекс семьи и параметр Pet - д
 Литература:
 
 Объект доступа к данным (DAO) в Java
+https://stackoverflow.com/questions/19154202/data-access-object-dao-in-java
 Service Layer (Сервисный уровень)
+http://design-pattern.ru/patterns/service-layer.html
 Уровни DAO и Service
+https://stackoverflow.com/questions/3882108/dao-and-service-layers-jpa-hibernate-spring
 Service layer pattern
+https://en.wikipedia.org/wiki/Service_layer_pattern
