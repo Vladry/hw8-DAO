@@ -24,12 +24,21 @@ public class Main {
                 girlsCounter++;
             }
         }
-        System.out.println("всего создано детей: " + totalChildren);
-        System.out.println("из них девочек: " + girlsCounter);
-        System.out.println("number of family members: " + family.countFamily(children.size()));
+//        System.out.println("всего создано детей: " + totalChildren);
+//        System.out.println("из них девочек: " + girlsCounter);
+//        System.out.println("number of family members: " + family.countFamily(children.size()));
 
         CollectionFamilyDao<Family> familyMemStorage = new CollectionFamilyDao<>();//создаём хранилище1
-        familyMemStorage.saveFamily(family); // сохранили семью в файл
+        FamilyService service = new FamilyService(familyMemStorage);
+        FamilyController controller = new FamilyController(service);
+
+        controller.FamilyService.dao.saveFamily(family);
+        service.dao.saveFamily(family); // а тут виден!
+
+        controller.FamilyService.dao.getAllFamilies();
+        service.dao.getAllFamilies();  // а тут виден!
+
+        controller.FamilyService.displayAllFamilies();
     }
 }
 
