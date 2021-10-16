@@ -50,7 +50,6 @@ public abstract class Human {
         this.family = family;
     }
 
-
     public void greetPet(Pet pet) {
         System.out.println("Привет, " + pet.getNickname());
     }
