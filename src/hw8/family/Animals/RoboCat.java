@@ -9,7 +9,7 @@ public class RoboCat extends Pet {
     RoboCat() {
     }
 
-    RoboCat(String nickname) {
+    public RoboCat(String nickname) {
         super(nickname);
     }
 

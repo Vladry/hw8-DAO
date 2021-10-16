@@ -9,7 +9,7 @@ public class DomesticCat extends Pet {
     DomesticCat() {
     }
 
-    DomesticCat(String nickname) {
+    public DomesticCat(String nickname) {
         super(nickname);
     }
 

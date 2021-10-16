@@ -3,6 +3,7 @@ package hw8.family.People;
 import hw8.family.Animals.Pet;
 
 import java.util.ArrayList;
+//import java.util.LinkedList;
 import java.util.List;
 
 import static hw8.family.People.BabyFactory.deliverABaby;
@@ -14,18 +15,24 @@ public class Family implements HumanCreator {
     private final List<Human> children;
     private Pet pet;
 
+
+
+    private final List<Pet> pets;
+
     static {
-        System.out.println("загружается новый класс Family");
+//        System.out.println("загружается новый класс Family");
     }
 
     {
+//        this.children = new LinkedList<>();
         this.children = new ArrayList<>();
-        System.out.println("создается новый объект Family");
+//        System.out.println("создается новый объект Family");
+        this.pets = new ArrayList<>();
     }
 
-    public Family(Human mother, Human father) {
-        this.mother = mother;
+    public Family(Human father, Human mother) {
         this.father = father;
+        this.mother = mother;
     }
 
     public Human bornChild() {
@@ -65,7 +72,7 @@ public class Family implements HumanCreator {
         this.father = father;
     }
 
-    public List getChildren() {
+    public List<Human> getChildren() {
         return this.children;
     }
 
@@ -82,13 +89,22 @@ public class Family implements HumanCreator {
         this.pet = pet;
     }
 
+    public List<Pet> getPets() {
+        return pets;
+    }
+
+    public void setPets(Pet pet) {
+        pets.add(pet);
+    }
+
     @Override
     public String toString() {
-        return "Family{\n mother= " + mother +
+        return "\n\nFamily{\n mother= " + mother +
                 "father= " + father +
-                "children= " + children.toString() + "\n" +
-                "pet= " + pet +
-                "}\n ";
+                "children=\n" + children.toString() +
+//                "pet= " + pet +
+                "\nPets=" + pets +
+                "}";
     }
 
     @Override

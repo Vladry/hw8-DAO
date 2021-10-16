@@ -9,7 +9,7 @@ public class Dog extends Pet {
     Dog() {
     }
 
-    Dog(String nickname) {
+    public Dog(String nickname) {
         super(nickname);
     }
 

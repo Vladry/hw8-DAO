@@ -14,8 +14,8 @@ final public class Woman extends Human {
     public Woman(String name, String surname, int year){
         super(name, surname, year);
     }
-    Woman(String name, String surname, int year,
-          int iq, Map<DayOfWeek, List<String>> schedule, Family family){
+    public Woman(String name, String surname, int year,
+                 int iq, Map<DayOfWeek, List<String>> schedule, Family family){
         super(name, surname, year, iq, schedule, family);
     }
 

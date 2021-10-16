@@ -11,11 +11,11 @@ public abstract class Pet {
     protected List<String> habits;
 
     static {
-        System.out.println("загружается новый класс Pet");
+//        System.out.println("загружается новый класс Pet");
     }
 
     {
-        System.out.println("создается новый объект Pet");
+//        System.out.println("создается новый объект Pet");
     }
 
 
@@ -82,9 +82,10 @@ public abstract class Pet {
 
     @Override
     public String toString() {
-        return species + " {nickname='" + nickname + "',  age=" + age + ", trickLevel=" +
-                trickLevel +
-                "habits=" + getHabits().toString() +
+        return species + " {nickname='" + nickname +
+//                "',  age=" + age + ", trickLevel=" +
+//                trickLevel +
+//                "habits=" + getHabits().toString() +
                 "}\n";
     }
 

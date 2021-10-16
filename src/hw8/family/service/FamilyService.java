@@ -1,23 +1,16 @@
 package hw8.family.service;
 
+import hw8.family.Animals.*;
 import hw8.family.DAO.FamilyDAO;
-import hw8.family.People.Family;
-import hw8.family.People.Human;
-import hw8.family.People.Man;
-import hw8.family.People.Woman;
+import hw8.family.People.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.time.LocalDate;
 
 public class FamilyService implements Services {
     public FamilyDAO<Family> dao;
-
-    private void famCreationReport(int totalChildren, int girlsCounter, int famCount) {
-        System.out.println("всего создано детей: " + totalChildren);
-        System.out.println("из них девочек: " + girlsCounter);
-        System.out.println("number of family members: " + famCount);
-    }
 
     public FamilyService(FamilyDAO<Family> dao) {
         this.dao = dao;
@@ -34,15 +27,15 @@ public class FamilyService implements Services {
     ;
 
     public List<Family> getFamiliesBiggerThan(int num) {
-        System.out.println("FamiliesBiggerThan to screen");
+        System.out.println("FamiliesBiggerThan " + num + " :");
         List<Family> listFam = dao.getAllFamilies();
         List<Family> result = new ArrayList<>();
         for (Family f : listFam) {
             if (f.getChildren().size() + 2 > num) {
                 result.add(f);
+                System.out.println(result.toString());
                 return result;
             }
-            ;
         }
         return listFam;
     }
@@ -50,7 +43,7 @@ public class FamilyService implements Services {
     ;
 
     public List<Family> getFamiliesLessThan(int num) {
-        System.out.println("FamiliesLessThan to screen: ");
+        System.out.println("FamiliesLessThan " + num + " :");
         List<Family> listFam = dao.getAllFamilies();
         List<Family> result = new ArrayList<>();
         for (Family f : listFam) {
@@ -58,11 +51,12 @@ public class FamilyService implements Services {
                 result.add(f);
             }
         }
+        System.out.println(result.toString());
         return result;
     }
 
     public int countFamiliesWithMemberNumber(int num) {
-        System.out.println("FamiliesWithMemberNumber: ");
+        System.out.println("FamiliesWithMemberNumber " + num + " :");
         List<Family> listFam = dao.getAllFamilies();
         List<Family> result = new ArrayList<>();
         for (Family f : listFam) {
@@ -70,9 +64,9 @@ public class FamilyService implements Services {
                 result.add(f);
             }
         }
+        System.out.println(result.toString());
         return result.size();
     }
-
 
     public boolean createNewFamily(String dadName, String momName, String lastName,
                                    int dadBirthYear, int momBirthYear, int ownChildren, int adoptedChildren) {
@@ -81,79 +75,103 @@ public class FamilyService implements Services {
         Family family = new Family(dad, mom);
         dad.setFamily(family);
         mom.setFamily(family);
-        List<Human> children = new ArrayList<>(ownChildren);
-        int girlsCounter = 0;
-
 
         for (int i = 0; i < ownChildren; i++) {
-
-            children.add(family.bornChild());
-            System.out.println(children.get(i).toString());
-            if (children.get(i).getName().contains("девочка")) {
-                girlsCounter++;
-            }
+            bornChild(family, dadName, momName);
+//            System.out.println("born a child: " + family.getChildren().get(i).toString());
         }
-        Human adoptedChild = new Man("Ilya", family.getFather().getSurname(), 2008);
 
-        famCreationReport(ownChildren, girlsCounter, family.countFamily(children.size()));
-
+        for (int i = 0; i < adoptedChildren; i++) {
+            adoptChild(family, new Man("fake", "fake", 2008));
+//            System.out.println("adopted a child: " + family.getChildren().get(ownChildren + i).toString());
+        }
         dao.saveFamily(family);
-
-        bornChild(family, "Sergey", "Zoya");
-        adoptChild(family, adoptedChild);
-
-
         return false;
     }
-
-    ;
 
     public boolean deleteFamilyByIndex(int i) {
+        dao.deleteFamily(i);
         return false;
     }
 
-    ;
+    public Family bornChild(Family family, String nameDad, String nameMon) {
+        String babyName = "";
+        Human newBaby = null;
+        Sex sex;       // MASCULINE, FEMININE
+        int rndSex, birthYear;
 
-    public boolean bornChild(Family f, String nameDad, String nameMon) {
-        return false;
-    }
+        int babyIq = (family.getFather().getIq() + family.getMother().getIq()) / 2;
 
-    ;
+        Random random = new Random();
+        rndSex = random.nextInt(2);
+        birthYear = random.nextInt(10) + 2010;
+        sex = (rndSex == 0) ? Sex.MASCULINE : Sex.FEMININE;
+        babyName = GenerateRandomName.get(sex);
 
-    public Family adoptChild(Family f, Human h) {
-        Human dad = new Man("Sergey", "Ivankov", 1980);
-        Human mom = new Woman("Zoya", "Ivankova", 1985);
-        Family family = new Family(dad, mom);
+        switch (sex) {
+            case MASCULINE:
+                newBaby = new Man("мальчик: " + babyName, family.getFather().getSurname(), birthYear, babyIq, family.getFather().getSchedule(), family);
+                break;
+            case FEMININE:
+                newBaby = new Woman("девочка: " + babyName, family.getFather().getSurname() + "a", birthYear, babyIq, family.getFather().getSchedule(), family);
+                break;
+            default:
+        }
+
+        family.setChildren(newBaby);
         return family;
     }
 
     ;
 
-    public boolean deleteAllChildrenOlderThen(int quantity) {
-        return false;
+    public Family adoptChild(Family family, Human newBaby) {
+        bornChild(family, family.getFather().getName(), family.getMother().getName());
+        return family;
     }
 
-    ;
+
+    public boolean deleteAllChildrenOlderThen(int age) {
+        List<Family> families = dao.getAllFamilies();
+        int yearNow = LocalDate.now().getYear();
+        for (int i = 0; i < families.size(); i++) {
+            for (int j = 0; j < families.get(i).getChildren().size(); j++) {
+                int birthYear = families.get(i).getChildren().get(j).getYear();
+                if (yearNow - birthYear > age) {
+                    System.out.println("this child is: " + (yearNow - birthYear) + " years old and must be deleted!");
+                    System.out.println("deleting: " + families.get(i).getChildren().get(j));
+                    dao.deleteChild(i, j);
+                }
+            }
+        }
+        System.out.println("after removal of children aged over " + age + " years old: ");
+        System.out.println(dao.getAllFamilies());
+        return true;
+    }
 
     public int count() {
-        return 0;
+        int number = dao.getAllFamilies().size();
+        System.out.println("families overall: " + number);
+        return number;
     }
 
     public Family getFamilyById(int id) {
-        Human dad = new Man("Sergey", "Ivankov", 1980);
-        Human mom = new Woman("Zoya", "Ivankova", 1985);
-        Family family = new Family(dad, mom);
+        Family family = dao.getAllFamilies().get(id);
+        System.out.println("family by id " + id + family );
         return family;
     }
 
-    public boolean getPets() {
-        return false;
+    public List<Pet> getPets(int id) {
+        List<Pet> pets = dao.getAllFamilies().get(id).getPets();
+        System.out.println("by this id, family's pets are: " + pets);
+        return pets;
     }
 
-    public boolean addPet() {
-        return false;
+    public boolean addPet(int id, Pet pet) {
+        Family fam = dao.getAllFamilies().get(id);
+        System.out.println("adding new pets: " + pet.getNickname());
+        fam.getPets().add(pet);
+        dao.saveFamily(fam);
+        return true;
     }
-
-    ;
 
 }

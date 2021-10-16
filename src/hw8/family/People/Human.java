@@ -15,7 +15,7 @@ public abstract class Human {
     private Family family;
 
     static {
-        System.out.println("загружается новый класс Human");
+//        System.out.println("загружается новый класс Human");
     }
 
     {
@@ -149,8 +149,8 @@ public abstract class Human {
         return "Human{ name=" + this.getName() + ", surname= " + this.getSurname() +
                 ", year=" + this.getYear() + ", iq=" + this.getIq() +
 //                ", family=" + this.getFamily().toString() +
-                ", schedule=" + this.getSchedule().toString() +
-                "} \n ";
+//                ", schedule=" + this.getSchedule().toString() +
+                "}\n ";
     }
 
     @Override
