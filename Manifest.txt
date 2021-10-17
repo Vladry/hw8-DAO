@@ -1,2 +1,0 @@
-Main-Class: hw8.family.tests.CountFamilyTest.java
-
