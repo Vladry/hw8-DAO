@@ -133,6 +133,7 @@ public class FamilyService implements Services {
 
 
     public boolean deleteAllChildrenOlderThen(int age) {
+        if (age <= 0) return false;
         List<Family> families = dao.getAllFamilies();
         int yearNow = LocalDate.now().getYear();
         for (int i = 0; i < families.size(); i++) {
@@ -162,7 +163,7 @@ public class FamilyService implements Services {
         return family;
     }
 
-    public List<Pet> getPets(int id) {
+    public List<Pet> getPets_(int id) {
         List<Pet> pets = dao.getAllFamilies().get(id).getPets();
         System.out.println("by this id, family's pets are: " + pets);
         return pets;

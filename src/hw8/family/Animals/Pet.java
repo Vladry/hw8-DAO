@@ -82,10 +82,7 @@ public abstract class Pet {
 
     @Override
     public String toString() {
-        return species + " {nickname='" + nickname +
-//                "',  age=" + age + ", trickLevel=" +
-//                trickLevel +
-//                "habits=" + getHabits().toString() +
+        return species + " {nickname=" + nickname +
                 "}\n";
     }
 

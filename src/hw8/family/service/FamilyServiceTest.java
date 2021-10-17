@@ -1,5 +1,7 @@
 package hw8.family.service;
 
+import hw8.family.Animals.Dog;
+import hw8.family.Animals.Pet;
 import hw8.family.Controller.FamilyController;
 import hw8.family.DAO.CollectionFamilyDao;
 import hw8.family.People.Family;
@@ -16,11 +18,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class FamilyServiceTest {
-
-    FamilyService module = null;
+    private FamilyService module;
 
     @Before
-    public void init() {
+    public void setUp() {
         List<List<String>> familyData = new ArrayList<>(Arrays.asList(
                 Arrays.asList("Leontiy", "Zoya", "Fedotov"),
                 Arrays.asList("Petya", "Natasha", "Gandzapety"),
@@ -60,14 +61,6 @@ public class FamilyServiceTest {
         }
     }
 
-//    @After
-//    public void cleanUp() {
-//        familyData = null;
-//        familyMemStorage = null;
-//        service = null;
-//        controller = null;
-//    }
-
     @Test
     public void displayAllFamilies() {
 
@@ -79,12 +72,14 @@ public class FamilyServiceTest {
         int result = module.countFamiliesWithMemberNumber(9);
         assertEquals(expected, result);
     }
+
     @Test
     public void testCountFamiliesUnSuccessful() {
         int expected = 16;
         int result = module.countFamiliesWithMemberNumber(6);
         assertNotEquals(expected, result);
     }
+
     @Test
     public void testCountFamiliesUnSuccessfulNegative() {
         int expected = -1;
@@ -94,22 +89,25 @@ public class FamilyServiceTest {
 
     @Test
     public void testCreateNewFamilySuccessful() {
-    boolean result = module.createNewFamily("Ivan", "Ivanka", "Ivanov",
-            1989, 1990, 1, 1);
-            assertTrue(result);
+        boolean result = module.createNewFamily("Ivan", "Ivanka", "Ivanov",
+                1989, 1990, 1, 1);
+        assertTrue(result);
     }
+
     @Test
     public void testCreateNewFamilyUnSuccessful1() {
         boolean result = module.createNewFamily(null, "Ivanka", "Ivanov",
                 1989, 1990, 1, 1);
         assertFalse(result);
     }
+
     @Test
     public void testCreateNewFamilyUnSuccessful2() {
         boolean result = module.createNewFamily("Ivan", "Ivanka", "Ivanov",
                 1989, 1990, -1, 1);
         assertFalse(result);
     }
+
     @Test
     public void testCreateNewFamilyUnSuccessful3() {
         boolean result = module.createNewFamily("Ivan", "Ivanka", "Ivanov",
@@ -119,26 +117,87 @@ public class FamilyServiceTest {
 
 
     @Test
-    public void deleteFamilyByIndex() {
+    public void deleteFamilySuccessful() {
+        boolean result = module.deleteFamilyByIndex(5);
+
     }
 
     @Test
     public void bornChild() {
+        Random rnd = new Random();
+        int randFamilyIndex = rnd.nextInt(16);
+        Family testFam = module.dao.getAllFamilies().get(randFamilyIndex);
+        int initCount = 2 + testFam.getChildren().size();
+        Family result = module.bornChild(testFam,
+                testFam.getFather().getName(), testFam.getMother().getName());
+        int finalCount = 2 + testFam.getChildren().size();
+        assertEquals(1, finalCount - initCount);
     }
 
     @Test
     public void adoptChild() {
+        int randFamilyIndex = 2;
+        Family testFam = module.dao.getAllFamilies().get(randFamilyIndex);
+        int initCount = 2 + testFam.getChildren().size();
+        Family result = module.bornChild(testFam,
+                testFam.getFather().getName(), testFam.getMother().getName());
+        int finalCount = 2 + testFam.getChildren().size();
+        assertEquals(1, finalCount - initCount);
     }
 
     @Test
-    public void deleteAllChildrenOlderThen() {
+    public void deleteChildrenOlderThenSuccess() {
+        boolean result = module.deleteAllChildrenOlderThen(8);
+        assertTrue(result);
     }
 
     @Test
-    public void count() {
+    public void deleteChildrenOlderThenUnSuccess() {
+        boolean result = module.deleteAllChildrenOlderThen(-1);
+        assertFalse(result);
+    }
+
+
+    @Test
+    public void countSuccess() {
+        int result = module.count();
+        assertEquals(16, result);
     }
 
     @Test
-    public void addPet() {
+    public void addPetSuccess() {
+        String newPetNickSet = "Joy";
+        Pet joy = new Dog(newPetNickSet);
+        int familyInd = 5;
+        List<Pet> initPetList = module.dao.getAllFamilies().get(familyInd).getPets();
+        int initPetListSize = initPetList.size();
+        boolean result = module.addPet(familyInd, joy);
+        List<Pet> resultPetList = module.dao.getAllFamilies().get(familyInd).getPets();
+        int updatedListSize = resultPetList.size();
+        boolean petWasAdded = (updatedListSize - initPetListSize == 1);
+        Pet newPet = resultPetList.get(updatedListSize - 1);
+        String actualNick = newPet.getNickname();
+        boolean newPetNameCorrect = (actualNick.equals(newPetNickSet));
+        assertTrue(result && petWasAdded && newPetNameCorrect);
+    }
+
+    @Test
+    public void addPetNameFail() {
+        String newPetNickExpected = "Joy";
+        String faulthyName = "blablabla";
+        Pet joy = new Dog(faulthyName);
+        int familyInd = 5;
+
+        List<Pet> initPetList = module.dao.getAllFamilies().get(familyInd).getPets();
+        int initPetListSize = initPetList.size();
+        boolean result = module.addPet(familyInd, joy);
+        List<Pet> resultPetList = module.dao.getAllFamilies().get(familyInd).getPets();
+        int finalPetListSize = resultPetList.size();
+        boolean petWasAdded = (finalPetListSize - initPetListSize == 1);
+        int newListSize = resultPetList.size();
+        Pet newPet = resultPetList.get(newListSize - 1);
+        String actualNick = newPet.getNickname();
+        boolean newPetNameCorrect = (actualNick.equals(newPetNickExpected));
+        assertFalse(result && petWasAdded && newPetNameCorrect);
     }
 }
