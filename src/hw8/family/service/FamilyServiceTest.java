@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class FamilyServiceTest {
@@ -74,22 +74,49 @@ public class FamilyServiceTest {
     }
 
     @Test
-    public void testCountFamiliesWithMemberNumberSuccessful() {
+    public void testCountFamiliesSuccessful() {
         int expected = 16;
         int result = module.countFamiliesWithMemberNumber(9);
         assertEquals(expected, result);
     }
-
     @Test
-    public void testCountFamiliesWithMemberNumberUnSuccessful() {
+    public void testCountFamiliesUnSuccessful() {
         int expected = 16;
         int result = module.countFamiliesWithMemberNumber(6);
         assertNotEquals(expected, result);
     }
+    @Test
+    public void testCountFamiliesUnSuccessfulNegative() {
+        int expected = -1;
+        int result = module.countFamiliesWithMemberNumber(-5);
+        assertEquals(expected, result);
+    }
 
     @Test
-    public void createNewFamily() {
+    public void testCreateNewFamilySuccessful() {
+    boolean result = module.createNewFamily("Ivan", "Ivanka", "Ivanov",
+            1989, 1990, 1, 1);
+            assertTrue(result);
     }
+    @Test
+    public void testCreateNewFamilyUnSuccessful1() {
+        boolean result = module.createNewFamily(null, "Ivanka", "Ivanov",
+                1989, 1990, 1, 1);
+        assertFalse(result);
+    }
+    @Test
+    public void testCreateNewFamilyUnSuccessful2() {
+        boolean result = module.createNewFamily("Ivan", "Ivanka", "Ivanov",
+                1989, 1990, -1, 1);
+        assertFalse(result);
+    }
+    @Test
+    public void testCreateNewFamilyUnSuccessful3() {
+        boolean result = module.createNewFamily("Ivan", "Ivanka", "Ivanov",
+                1989, 1990, 1, -1);
+        assertFalse(result);
+    }
+
 
     @Test
     public void deleteFamilyByIndex() {

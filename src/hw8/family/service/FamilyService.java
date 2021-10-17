@@ -56,6 +56,7 @@ public class FamilyService implements Services {
     }
 
     public int countFamiliesWithMemberNumber(int num) {
+        if (num <= 1 ) return -1;
         System.out.println("FamiliesWithMemberNumber " + num + " :");
         List<Family> listFam = dao.getAllFamilies();
         List<Family> result = new ArrayList<>();
@@ -70,6 +71,7 @@ public class FamilyService implements Services {
 
     public boolean createNewFamily(String dadName, String momName, String lastName,
                                    int dadBirthYear, int momBirthYear, int ownChildren, int adoptedChildren) {
+        if (dadName == null || momName == null || ownChildren < 0 || adoptedChildren < 0) return false;
         Human dad = new Man(dadName, lastName, dadBirthYear);
         Human mom = new Woman(momName, lastName + "a", momBirthYear);
         Family family = new Family(dad, mom);
@@ -86,7 +88,7 @@ public class FamilyService implements Services {
 //            System.out.println("adopted a child: " + family.getChildren().get(ownChildren + i).toString());
         }
         dao.saveFamily(family);
-        return false;
+        return true;
     }
 
     public boolean deleteFamilyByIndex(int i) {
