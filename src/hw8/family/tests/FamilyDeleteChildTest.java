@@ -1,5 +1,6 @@
-package hw8.family;
+package hw8.family.tests;
 
+import hw8.family.DayOfWeek;
 import hw8.family.People.Family;
 import hw8.family.People.Human;
 import hw8.family.People.Man;
@@ -7,22 +8,24 @@ import hw8.family.People.Woman;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class FamilyDeleteChildTest {
     Family module;
-    Human kid1, kid2,kid3,kid4,kid5,kid6;
-    String[][] schedule = new String[7][2];
+    Human kid1, kid2, kid3, kid4, kid5, kid6;
+    Map<DayOfWeek, List<String>> schedule = new HashMap<>();
 
     @Before
     public void setUp() {
-        schedule[0][0] = DayOfWeek.SUNDAY.name().toLowerCase();
-        schedule[0][1] = "First day born";
-        schedule[1][0] = DayOfWeek.MONDAY.name().toLowerCase();
-        schedule[1][1] = "Second day born";
+        schedule.put(DayOfWeek.SUNDAY, List.of("First day born"));
+        schedule.put(DayOfWeek.MONDAY, List.of("First day born"));
+        schedule.put(DayOfWeek.TUESDAY, List.of("First day born"));
+        schedule.put(DayOfWeek.WEDNESDAY, List.of("Third day born"));
         module = new Family(new Woman("Mother", "Ryab", 1960),
                 new Man("Father", "Ryab", 1960)
         );

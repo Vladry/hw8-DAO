@@ -1,5 +1,6 @@
-package hw8.family;
+package hw8.family.tests;
 
+import hw8.family.DayOfWeek;
 import hw8.family.People.Family;
 import hw8.family.People.Human;
 import hw8.family.People.Man;
@@ -7,22 +8,26 @@ import hw8.family.People.Woman;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static org.junit.Assert.assertTrue;
 //import org.junit.Assert;
 
 public class FamilyToStringTest {
     Family module;
     Human kid1, kid2;
-    String[][] schedule = new String[7][2];
+    Map<DayOfWeek, List<String>> schedule = new HashMap<>();
 
 
     @Before
     public void setUp() {
-        schedule[0][0] = DayOfWeek.SUNDAY.name().toLowerCase();
-        schedule[0][1] = "First day born";
-        schedule[1][0] = DayOfWeek.MONDAY.name().toLowerCase();
-        schedule[1][1] = "Second day born";
-        module = new Family(new Woman("Mother", "Ryab", 1960),
+        Map<DayOfWeek, List<String>> schedule = new HashMap<>();
+        schedule.put(DayOfWeek.SUNDAY, List.of("First day born"));
+        schedule.put(DayOfWeek.MONDAY, List.of("Second day born"));
+        schedule.put(DayOfWeek.TUESDAY, List.of("Third day born"));
+        module = new Family(new Woman("blablabla", "Ryab", 1960),
                 new Man("Father", "Ryab", 1960)
         );
         kid1 = new Man("Kid1", "Kidovich1", 2000,
@@ -40,14 +45,12 @@ public class FamilyToStringTest {
         String substr2 = module.getChildren().get(1).toString();
         boolean k1 = substr1.contains("Kid1")
                 && substr1.contains("Kidovich1")
-                && substr1.contains("2000")
-                && substr1.contains("First day born");
+                && substr1.contains("2000");
         boolean k2 = substr2.contains("Kid2")
                 && substr2.contains("Kidovich2")
-                && substr2.contains("2000")
-                && substr2.contains("Second day born");
+                && substr2.contains("2000");
         boolean kidTestPass = k1 && k2;
-        boolean motherTestPass = module.toString().contains("Mother");
+        boolean motherTestPass = module.toString().contains("blablabla");
         boolean fatherTestPass = module.toString().contains("Father");
         boolean parentsToStringPass = motherTestPass && fatherTestPass;
 
@@ -60,18 +63,16 @@ public class FamilyToStringTest {
         String substr2 = module.getChildren().get(1).toString();
         boolean k1 = substr1.contains("blablabla")
                 && substr1.contains("Kidovich1")
-                && substr1.contains("2000")
-                && substr1.contains("First day born");
+                && substr1.contains("2000");
         boolean k2 = substr2.contains("Kid2")
                 && substr2.contains("Kidovich2")
-                && substr2.contains("2000")
-                && substr2.contains("Second day born");
+                && substr2.contains("2000");
         boolean kidTestPass = k1 && k2;
         boolean motherTestPass = module.toString().contains("Mother");
         boolean fatherTestPass = module.toString().contains("Father");
         boolean parentsToStringPass = motherTestPass && fatherTestPass;
 
-        assertTrue(kidTestPass && parentsToStringPass);
+        assertTrue(!kidTestPass && !parentsToStringPass);
     }
 
     @Test
@@ -80,17 +81,15 @@ public class FamilyToStringTest {
         String substr2 = module.getChildren().get(1).toString();
         boolean k1 = substr1.contains("Kid1")
                 && substr1.contains("Kidovich1")
-                && substr1.contains("2000")
-                && substr1.contains("First day born");
+                && substr1.contains("2000");
         boolean k2 = substr2.contains("Kid2")
                 && substr2.contains("Kidovich2")
-                && substr2.contains("2000")
-                && substr2.contains("Second day born");
+                && substr2.contains("2000");
         boolean kidTestPass = k1 && k2;
-        boolean motherTestPass = module.toString().contains("blablabla");
+        boolean motherTestPass = module.toString().contains("Mother");
         boolean fatherTestPass = module.toString().contains("Father");
         boolean parentsToStringPass = motherTestPass && fatherTestPass;
 
-        assertTrue(kidTestPass && parentsToStringPass);
+        assertTrue(kidTestPass && !parentsToStringPass);
     }
 }
