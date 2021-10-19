@@ -1,12 +1,8 @@
 package hw8.family;
 
-import hw8.family.Animals.Dog;
-import hw8.family.Animals.DomesticCat;
-import hw8.family.Animals.Fish;
-import hw8.family.Animals.RoboCat;
 import hw8.family.Controller.FamilyController;
 import hw8.family.DAO.CollectionFamilyDao;
-import hw8.family.People.*;
+import hw8.family.People.Family;
 import hw8.family.service.FamilyService;
 
 import java.util.ArrayList;
@@ -60,26 +56,7 @@ public class Main {
         }
 
 
-        // проверка метода создания животных и метода получения семьи по ID:
-        controller.FamilyService.addPet(1, new Dog("Dog_Fam1"));
-        controller.FamilyService.addPet(2, new DomesticCat("Cat_Fam2"));
-        controller.FamilyService.addPet(3, new Fish("Fish_Fam3"));
-        controller.FamilyService.getFamilyById(1);
-        controller.FamilyService.getFamilyById(2);
-        controller.FamilyService.getFamilyById(3);
-
-
-
-//последовательно раскомментируй для проверки остальных методов:
-
-//        controller.FamilyService.displayAllFamilies();
-//        controller.FamilyService.getFamiliesBiggerThan(4);
-//        controller.FamilyService.getFamiliesLessThan(4);
-//        controller.FamilyService.countFamiliesWithMemberNumber(4);
-//        controller.FamilyService.deleteFamilyByIndex(1);
-//        controller.FamilyService.deleteAllChildrenOlderThen(9);
-//        controller.FamilyService.count();
-
+        controller.doControl();
 
     }
 }
